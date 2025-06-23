@@ -1,0 +1,24 @@
+principal_input = input("Введіть початкову суму вкладу: ").strip()
+rate_input = input("Введіть річну процентну ставку (%): ").strip()
+target_input = input("Введіть бажану кінцеву суму: ").strip()
+
+try:
+    principal = float(principal_input)
+    rate = float(rate_input)
+    target = float(target_input)
+
+    if principal <= 0 or rate <= 0 or target <= 0:
+        print("Усі значення повинні бути додатними числами.")
+    else:
+        years = 0
+        current_amount = principal
+
+        while current_amount < target:
+            current_amount += current_amount * (rate / 100)
+            years += 1
+            print(f"Після {years} року(ів) сума на депозиті: {current_amount:.2f}")
+
+        print(f"Потрібно {years} років, щоб досягти або перевищити бажану суму.")
+
+except ValueError:
+    print("Помилка: введіть коректні числові значення.")
