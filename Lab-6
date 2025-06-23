@@ -1,0 +1,30 @@
+def main():
+    gold_coins = 1000  
+    print(f"У вас є {gold_coins} золотих монет для поділу між командою.")
+
+    while True:
+        try:
+            people = input("Введіть кількість людей у команді: ")
+            people = int(people)
+
+            if people == 0:
+                raise ZeroDivisionError("Неможливо ділити на нуль!")
+
+            share = gold_coins // people
+            remainder = gold_coins % people
+            print(f"Кожен отримає по {share} монет(и). Залишок: {remainder} монет(и).")
+
+        except ValueError:
+            print("Помилка: потрібно ввести ціле число.")
+        except ZeroDivisionError as zde:
+            print(f"Помилка: {zde}")
+        finally:
+            print("Пригоди тривають!\n")
+
+        retry = input("Бажаєте спробувати ще раз? (так/ні): ").strip().lower()
+        if retry != 'так':
+            print("Дякуємо за гру! До зустрічі!")
+            break
+
+if __name__ == "__main__":
+    main()
