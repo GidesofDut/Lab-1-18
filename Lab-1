@@ -1,0 +1,35 @@
+import requests
+
+def get_random_quote():
+    try:
+        response = requests.get("https://api.quotable.io/random")
+
+        if response.status_code == 200:
+            data = response.json()
+            quote = data["content"]
+            author = data["author"]
+            full_quote = f"{quote} — {author}"
+
+            print("Quote:")
+            print(full_quote)
+
+            with open("quote.txt", "w", encoding="utf-8") as file:
+                file.write(full_quote)
+
+            return full_quote
+        else:
+            print("Failed to fetch quote. Status code:", response.status_code)
+            return None
+    except Exception as e:
+        print("An error occurred:", e)
+        return None
+
+def count_words(text):
+    return len(text.split())
+
+if __name__ == "__main__":
+    quote = get_random_quote()
+    if quote:
+        word_count = count_words(quote)
+        print(f"\nWord count in the quote: {word_count}")
+        
