@@ -1,0 +1,56 @@
+import asyncio
+from aiogram import Bot, Dispatcher, types
+from aiogram.filters import Command
+from aiogram.types import Message
+from aiogram.fsm.context import FSMContext
+from aiogram.fsm.state import State, StatesGroup
+from aiogram.fsm.storage.memory import MemoryStorage
+
+TOKEN = "YOUR_BOT_TOKEN_HERE"
+
+bot = Bot(token=TOKEN)
+dp = Dispatcher(storage=MemoryStorage())
+
+class NoteStates(StatesGroup):
+    waiting_for_note = State()
+
+@dp.message(Command("start"))
+async def cmd_start(message: Message):
+    await message.answer("Привіт! Це бот для нотаток. Використовуй /add, щоб додати нотатку.")
+
+@dp.message(Command("add"))
+async def cmd_add(message: Message, state: FSMContext):
+    await message.answer("Введи текст нотатки:")
+    await state.set_state(NoteStates.waiting_for_note)
+
+@dp.message(NoteStates.waiting_for_note)
+async def process_note(message: Message, state: FSMContext):
+    note = message.text.strip()
+    if note:
+        data = await state.get_data()
+        notes = data.get("notes", [])
+        notes.append(note)
+        await state.update_data(notes=notes)
+        await message.answer("Нотатку додано!")
+    else:
+        await message.answer("Порожня нотатка не збережена.")
+
+    await state.clear()
+
+@dp.message(Command("list"))
+async def cmd_list(message: Message, state: FSMContext):
+    data = await state.get_data()
+    notes = data.get("notes", [])
+    if notes:
+        reply = "Твої нотатки:\n" + "\n".join(f"{i+1}. {n}" for i, n in enumerate(notes))
+    else:
+        reply = "Нотаток ще немає."
+    await message.answer(reply)
+
+@dp.message(Command("exit"))
+async def cmd_exit(message: Message, state: FSMContext):
+    await state.clear()
+    await message.answer("Вихід з режиму введення нотаток.")
+
+if __name__ == "__main__":
+    asyncio.run(dp.start_polling(bot))
