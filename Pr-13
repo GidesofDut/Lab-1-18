@@ -1,0 +1,31 @@
+def simple_text_editor():
+    filename = input("Введіть ім'я нового текстового файлу: ").strip()
+    if not filename:
+        print("Ім'я файлу не може бути порожнім.")
+        return
+
+    print("Вводьте текст рядок за рядком. Для завершення введення залиште рядок порожнім і натисніть Enter.")
+
+    lines = []
+    while True:
+        line = input()
+        if line == "":
+            break
+        lines.append(line)
+
+    try:
+        with open(filename, "w", encoding="utf-8") as file:
+            for line in lines:
+                file.write(line + "\n")
+        print(f"\nФайл '{filename}' успішно збережено.\n")
+
+        print("Вміст файлу:")
+        with open(filename, "r", encoding="utf-8") as file:
+            content = file.read()
+            print(content)
+
+    except Exception as e:
+        print(f"Сталася помилка при роботі з файлом: {e}")
+
+if __name__ == "__main__":
+    simple_text_editor()
