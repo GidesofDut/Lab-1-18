@@ -1,0 +1,26 @@
+def factorial_recursive(n):
+    """
+
+    n (int): Ціле невід'ємне число, для якого обчислюється факторіал.
+
+    int: Факторіал числа n.
+
+    ValueError: Якщо n є від'ємним числом.
+    """
+    if not isinstance(n, int):
+        raise TypeError("Аргумент має бути цілим числом.")
+    if n < 0:
+        raise ValueError("Факторіал не визначений для від'ємних чисел.")
+
+    if n == 0:
+        return 1  # базовий випадок
+    else:
+        return n * factorial_recursive(n - 1)  # рекурсивний крок
+
+if __name__ == "__main__":
+    try:
+        print(factorial_recursive(5))  # 120
+        print(factorial_recursive(0))  # 1
+        print(factorial_recursive(-3)) # викличе помилку
+    except Exception as e:
+        print("Помилка:", e)
