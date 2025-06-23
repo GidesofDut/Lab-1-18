@@ -1,0 +1,47 @@
+import random
+
+def generate_code():
+    digits = list('0123456789')
+    random.shuffle(digits)
+    while digits[0] == '0':
+        random.shuffle(digits)
+    return digits[:4]
+
+def analyze_guess(secret_code, guess):
+    bulls = 0
+    cows = 0
+
+    for i in range(4):
+        if guess[i] == secret_code[i]:
+            bulls += 1
+        elif guess[i] in secret_code:
+            cows += 1
+    return bulls, cows
+
+def main():
+    secret_code = generate_code()
+    # print("DEBUG: Secret code is", ''.join(secret_code))
+
+    print("Вгадай секретний 4-цифровий код. Цифри у коді не повторюються.")
+    attempts = 0
+
+    while True:
+        guess = input("Введи свій варіант: ")
+        if len(guess) != 4 or not guess.isdigit():
+            print("Помилка! Введи саме 4 цифри.")
+            continue
+        if len(set(guess)) != 4:
+            print("Цифри повинні бути унікальними. Спробуй ще раз.")
+            continue
+
+        attempts += 1
+        bulls, cows = analyze_guess(secret_code, guess)
+
+        if bulls == 4:
+            print(f"Вітаю! Ти відгадав код {''.join(secret_code)} за {attempts} спроб!")
+            break
+        else:
+            print(f"Бики: {bulls}, Корови: {cows}")
+
+if __name__ == "__main__":
+    main()
