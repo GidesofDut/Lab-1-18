@@ -1,0 +1,14 @@
+print("Hello, Python!")
+
+num1 = input("Введіть перше число: ")
+num2 = input("Введіть друге число: ")
+
+try:
+    n1 = float(num1)
+    n2 = float(num2)
+    
+    result = n1 + n2
+    
+    print(f"Сума чисел: {result}")
+except ValueError:
+    print("Помилка: будь ласка, введіть коректні числові значення.")
