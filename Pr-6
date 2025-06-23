@@ -1,0 +1,12 @@
+age_input = input("Введіть ваш вік: ").strip()
+
+try:
+    age = int(age_input)
+
+    if age < 18:
+        print("Доступ заборонено!")
+    else:
+        print("Доступ дозволено!")
+
+except ValueError:
+    print("Помилка: введіть коректне ціле число для віку.")
