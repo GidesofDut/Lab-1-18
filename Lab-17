@@ -1,0 +1,73 @@
+import json
+import os
+
+class Assistant:
+    def __init__(self, filename="notes.json"):
+        self.filename = filename
+        self.notes = self.load_notes()
+
+    def load_notes(self):
+        if os.path.exists(self.filename):
+            with open(self.filename, "r", encoding="utf-8") as f:
+                try:
+                    return json.load(f)
+                except json.JSONDecodeError:
+                    return []
+        else:
+            return []
+
+    def save_notes(self):
+        with open(self.filename, "w", encoding="utf-8") as f:
+            json.dump(self.notes, f, ensure_ascii=False, indent=2)
+
+    def add_note(self, note: str):
+        self.notes.append(note)
+        self.save_notes()
+        print("Нотатку додано.")
+
+    def list_notes(self):
+        if not self.notes:
+            print("Нотаток ще немає.")
+            return
+        print("Список нотаток:")
+        for i, note in enumerate(self.notes, 1):
+            print(f"{i}. {note}")
+
+    def search_notes(self, keyword: str):
+        results = [note for note in self.notes if keyword.lower() in note.lower()]
+        if not results:
+            print(f"Нотаток з ключовим словом '{keyword}' не знайдено.")
+            return
+        print(f"Нотатки, що містять '{keyword}':")
+        for i, note in enumerate(results, 1):
+            print(f"{i}. {note}")
+
+def main():
+    assistant = Assistant()
+
+    print("Консольний асистент. Введіть команду: /add, /list, /search, /exit")
+
+    while True:
+        command = input(">> ").strip()
+        if command == "/add":
+            note = input("Введіть нотатку: ").strip()
+            if note:
+                assistant.add_note(note)
+            else:
+                print("Порожня нотатка не додана.")
+        elif command == "/list":
+            assistant.list_notes()
+        elif command == "/search":
+            keyword = input("Введіть ключове слово для пошуку: ").strip()
+            if keyword:
+                assistant.search_notes(keyword)
+            else:
+                print("Порожній запит пошуку.")
+        elif command == "/exit":
+            print("Вихід з програми. До зустрічі!")
+            break
+        else:
+            print("Невідома команда. Доступні: /add, /list, /search, /exit")
+
+if __name__ == "__main__":
+    main()
