@@ -1,0 +1,30 @@
+import random
+
+def main():
+    secret = random.randint(1, 50)
+    print("Я загадав число від 1 до 50. Спробуй вгадати!")
+
+    while True:
+        try:
+            guess = int(input("Введи число: "))
+            if not 1 <= guess <= 50:
+                print("Будь ласка, введи число від 1 до 50.")
+                continue
+        except ValueError:
+            print("Помилка! Введи ціле число.")
+            continue
+
+        diff = abs(secret - guess)
+
+        if diff == 0:
+            print("Вітаю! Ти відгадав число!")
+            break
+        elif diff <= 3:
+            print("Дуже близько!")
+        elif diff <= 10:
+            print("Близько")
+        else:
+            print("Далеко")
+
+if __name__ == "__main__":
+    main()
