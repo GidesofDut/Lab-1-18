@@ -1,0 +1,18 @@
+num_str = input("Введіть трицифрове число: ")
+
+if len(num_str) == 3 and num_str.isdigit():
+    num = int(num_str)
+
+    first_digit = num // 100
+
+    last_digit = num % 10
+
+    print(f"Перша цифра: {first_digit}")
+    print(f"Остання цифра: {last_digit}")
+
+    if first_digit == last_digit:
+        print("Перша і остання цифри рівні.")
+    else:
+        print("Перша і остання цифри НЕ рівні.")
+else:
+    print("Помилка: введіть коректне трицифрове число.")
