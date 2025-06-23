@@ -1,0 +1,14 @@
+temp_input = input("Введіть температуру (°C): ").strip()
+humidity_input = input("Введіть відносну вологість (%): ").strip()
+
+try:
+    temperature = float(temp_input)
+    humidity = float(humidity_input)
+
+    if temperature > 30 and humidity > 70:
+        print("Активація системи охолодження")
+    else:
+        print("Умови нормальні")
+
+except ValueError:
+    print("Помилка: введіть числові значення для температури і вологості.")
