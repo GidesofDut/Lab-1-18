@@ -1,35 +1,32 @@
-import requests
+import random   
+
+QUOTES = [
+    {"content": "Життя — це 10 % того, що з тобою відбувається, і 90 % того, як ти на це реагуєш.", "author": "Чарльз Свіндолл"},
+    {"content": "Єдиний шлях зробити велику роботу — любити те, що робиш.", "author": "Стів Джобс"},
+    {"content": "Хто хоче — шукає можливості, хто не хоче — шукає виправдання.", "author": "Сократ"},
+    {"content": "Помиляється той, хто нічого не робить.", "author": "Теодор Рузвельт"},
+    {"content": "Успіх — це сума маленьких зусиль, що повторюються день у день.", "author": "Роберт Коллієр"},
+]
 
 def get_random_quote():
-    try:
-        response = requests.get("https://api.quotable.io/random")
+    
+    data = random.choice(QUOTES)          
+    quote = data["content"]
+    author = data["author"]
+    full_quote = f"{quote} — {author}"
 
-        if response.status_code == 200:
-            data = response.json()
-            quote = data["content"]
-            author = data["author"]
-            full_quote = f"{quote} — {author}"
+    print("Quote:")
+    print(full_quote)
 
-            print("Quote:")
-            print(full_quote)
+    with open("quote.txt", "w", encoding="utf-8") as file:
+        file.write(full_quote)
 
-            with open("quote.txt", "w", encoding="utf-8") as file:
-                file.write(full_quote)
-
-            return full_quote
-        else:
-            print("Failed to fetch quote. Status code:", response.status_code)
-            return None
-    except Exception as e:
-        print("An error occurred:", e)
-        return None
+    return full_quote
 
 def count_words(text):
     return len(text.split())
 
 if __name__ == "__main__":
     quote = get_random_quote()
-    if quote:
-        word_count = count_words(quote)
-        print(f"\nWord count in the quote: {word_count}")
-        
+    word_count = count_words(quote)
+    print(f"\nWord count in the quote: {word_count}")
