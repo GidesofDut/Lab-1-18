@@ -1,0 +1,20 @@
+def analyze_text(text):
+    vowels = set("аеєиіїоуюяaeiou") (українські та англійські)
+    consonants = set("бвгґджзйклмнпрстфхцчшщbcdfghjklmnpqrstvwxz") 
+    text_lower = text.lower()
+
+    letters = [ch for ch in text_lower if ch.isalpha()]
+    vowel_letters = [ch for ch in letters if ch in vowels]
+    consonant_letters = [ch for ch in letters if ch in consonants]
+
+    print(f"У рядку: \"{text}\"")
+    print(f"Загальна кількість літер: {len(letters)}")
+    print(f"Кількість голосних: {len(vowel_letters)}")
+    print(f"Кількість приголосних: {len(consonant_letters)}")
+
+    print(f"Голосні букви (без повторів): {sorted(set(vowel_letters))}")
+    print(f"Приголосні букви (без повторів): {sorted(set(consonant_letters))}")
+
+if __name__ == "__main__":
+    user_input = input("Введіть рядок: ")
+    analyze_text(user_input)
