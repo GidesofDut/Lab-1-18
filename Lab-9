@@ -1,8 +1,4 @@
 def calculate_cosmic_distance(speed_of_light_fraction, time_years):
-    """
-    speed_of_light_fraction: число від 0 до 1 (частка швидкості світла)
-    time_years: час у роках
-    """
     if not (0 <= speed_of_light_fraction <= 1):
         raise ValueError("speed_of_light_fraction має бути від 0 до 1")
     return speed_of_light_fraction * time_years
