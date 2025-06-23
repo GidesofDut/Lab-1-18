@@ -1,0 +1,13 @@
+def factorial_recursive(n: int) -> int:
+    
+    if n < 0:
+        raise ValueError("Вхідне число має бути невід'ємним.")
+    if n == 0:
+        return 1
+    return n * factorial_recursive(n - 1)
+
+try:
+    num = int(input("Введіть невід’ємне ціле число для обчислення факторіалу: "))
+    print(f"Факторіал числа {num} дорівнює {factorial_recursive(num)}")
+except ValueError as e:
+    print(f"Помилка: {e}")
