@@ -1,0 +1,13 @@
+cities = ["Київ", "Одеса", "Львів", "Харків", "Житомир"]
+
+cities_set = set(cities)
+
+user_input = input("Введіть міста для перевірки через кому: ").strip()
+
+check_cities = [city.strip() for city in user_input.split(",") if city.strip()]
+
+for city in check_cities:
+    if city in cities_set:
+        print(f"Місто '{city}' присутнє у списку.")
+    else:
+        print(f"Місто '{city}' відсутнє у списку.")
