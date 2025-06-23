@@ -1,0 +1,37 @@
+import json
+import os
+
+def load_stats(filename="player_stats.json"):
+    if os.path.exists(filename):
+        with open(filename, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {}
+
+def save_stats(stats, filename="player_stats.json"):
+    with open(filename, "w", encoding="utf-8") as f:
+        json.dump(stats, f, ensure_ascii=False, indent=4)
+
+def update_stats(stats, player_name, score):
+    if player_name not in stats:
+        stats[player_name] = {"games_played": 0, "total_score": 0}
+    stats[player_name]["games_played"] += 1
+    stats[player_name]["total_score"] += score
+
+def main():
+    stats = load_stats()
+
+    player_name = input("Введіть ім'я гравця: ").strip()
+    try:
+        score = int(input("Введіть набраний бал: "))
+    except ValueError:
+        print("Помилка: бал має бути цілим числом.")
+        return
+
+    update_stats(stats, player_name, score)
+    save_stats(stats)
+
+    print(f"Статистика для {player_name} оновлена:")
+    print(stats[player_name])
+
+if __name__ == "__main__":
+    main()
