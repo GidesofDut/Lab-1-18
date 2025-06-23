@@ -1,0 +1,35 @@
+from datetime import datetime
+
+class UkrainianCalendar:
+    def __init__(self):
+        self.holidays = [
+            "01-01", "01-07", "03-08", "05-01", "05-09",
+            "06-28", "08-24", "10-14"
+        ]
+
+    def get_holiday_list(self):
+        return self.holidays
+
+    def is_working_day(self, date: datetime):
+        weekday = date.weekday()
+        date_str = date.strftime("%m-%d")
+        return weekday < 5 and date_str not in self.holidays
+
+def main():
+    calendar = UkrainianCalendar()
+    print("Список свят:")
+    for holiday in calendar.get_holiday_list():
+        print("-", holiday)
+
+    date_str = input("Введіть дату (РРРР-ММ-ДД): ").strip()
+    try:
+        user_date = datetime.strptime(date_str, "%Y-%m-%d")
+        if calendar.is_working_day(user_date):
+            print(f"{date_str} — робочий день.")
+        else:
+            print(f"{date_str} — вихідний або свято.")
+    except ValueError:
+        print("Неправильний формат дати.")
+
+if __name__ == "__main__":
+    main()
