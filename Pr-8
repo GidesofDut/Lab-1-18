@@ -1,0 +1,22 @@
+filtered_numbers = [x for x in range(1, 101) if x % 3 == 0 and x % 5 != 0]
+
+print("Результат через list comprehension:")
+print(filtered_numbers)
+
+filtered_numbers_while = []
+num = 1
+
+while num <= 100:
+    if num % 3 != 0:
+        num += 1
+        continue
+
+    if num % 5 == 0:
+        num += 1
+        continue
+
+    filtered_numbers_while.append(num)
+    num += 1
+
+print("\nРезультат через цикл while з операторами continue:")
+print(filtered_numbers_while)
