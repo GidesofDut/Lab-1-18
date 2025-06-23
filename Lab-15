@@ -1,0 +1,28 @@
+def add_entry(filename="travel_journal.txt"):
+    date = input("Введіть дату (у форматі РРРР-ММ-ДД): ").strip()
+    location = input("Введіть локацію: ").strip()
+    text = input("Введіть текст запису: ").strip()
+
+    if not date or not location or not text:
+        print("Помилка: всі поля мають бути заповнені!")
+        return
+
+    with open(filename, "a", encoding="utf-8") as file:
+        file.write(f"Дата: {date}\n")
+        file.write(f"Локація: {location}\n")
+        file.write(f"Текст: {text}\n")
+        file.write("-" * 40 + "\n")  # розділювач між записами
+
+    print("Запис успішно додано!")
+
+def main():
+    print("Програма 'Щоденник мандрівника'")
+    while True:
+        add_entry()
+        cont = input("Бажаєте додати ще один запис? (так/ні): ").strip().lower()
+        if cont != "так":
+            print("Дякуємо за використання програми!")
+            break
+
+if __name__ == "__main__":
+    main()
