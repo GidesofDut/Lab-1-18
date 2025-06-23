@@ -1,0 +1,18 @@
+first_name = input("Введіть ім'я: ").strip()
+last_name = input("Введіть прізвище: ").strip()
+age_input = input("Введіть вік: ").strip()
+city = input("Введіть місто: ").strip()
+
+try:
+    age = float(age_input)
+    
+    output = (
+        f"Ім'я: {first_name:<10} "
+        f"Прізвище: {last_name} "
+        f"Вік: {age:.2f} "
+        f"Місто: {city:>15}"
+    )
+    
+    print(output)
+except ValueError:
+    print("Помилка: вік має бути числом.")
