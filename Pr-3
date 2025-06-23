@@ -1,0 +1,16 @@
+num_str = input("Введіть число (ціле або з плаваючою точкою): ").strip()
+
+try:
+    if '.' in num_str:
+        num = float(num_str)
+    else:
+        num = int(num_str)
+    
+    result = num * 2
+
+    result_str = str(result)
+
+    print(f"Результат подвоєння: {result_str}")
+
+except ValueError:
+    print("Помилка: введено некоректне число.")
