@@ -1,0 +1,62 @@
+import json
+
+def load_phones(filename):
+    with open(filename, encoding='utf-8') as f:
+        return json.load(f)
+
+def sort_phones(phones, key):
+    if key not in ["price", "rating", "reviews"]:
+        print("Неправильний параметр сортування. Використовуйте 'price', 'rating' або 'reviews'.")
+        return phones
+    return sorted(phones, key=lambda x: x[key], reverse=True)
+
+def search_phones(phones, query):
+    query_lower = query.lower()
+    results = []
+    for phone in phones:
+        if query_lower in phone["name"].lower() or query_lower in phone.get("specs", "").lower():
+            results.append(phone)
+    return results
+
+def print_phones(phones):
+    if not phones:
+        print("Телефонів не знайдено.")
+        return
+    for p in phones:
+        print(f"Назва: {p['name']}")
+        print(f"Ціна: {p['price']} грн")
+        print(f"Рейтинг: {p['rating']}")
+        print(f"Відгуків: {p['reviews']}")
+        print(f"Характеристики: {p.get('specs', 'немає')}")
+        print("-" * 30)
+
+def main():
+    filename = "phones.json"
+    phones = load_phones(filename)
+
+    while True:
+        print("\nМеню:")
+        print("1 - Сортувати телефони")
+        print("2 - Пошук телефону")
+        print("3 - Вийти")
+        choice = input("Оберіть дію: ").strip()
+
+        if choice == "1":
+            key = input("За чим сортувати? (price, rating, reviews): ").strip().lower()
+            sorted_phones = sort_phones(phones, key)
+            print_phones(sorted_phones)
+        elif choice == "2":
+            query = input("Введіть назву або характеристику для пошуку: ").strip()
+            if not query:
+                print("Порожній запит. Спробуйте ще раз.")
+                continue
+            results = search_phones(phones, query)
+            print_phones(results)
+        elif choice == "3":
+            print("Вихід з програми.")
+            break
+        else:
+            print("Невірний вибір. Спробуйте ще раз.")
+
+if __name__ == "__main__":
+    main()
