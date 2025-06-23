@@ -1,0 +1,65 @@
+import random
+
+riddles = [
+    {
+        "category": "живе",
+        "object": "собака",
+        "hints": ["Це домашній улюбленець.", "Він часто гавкає.", "Він вірний друг."]
+    },
+    {
+        "category": "живе",
+        "object": "кіт",
+        "hints": ["Він любить ловити мишей.", "Має вуса.", "Він муркоче."]
+    },
+    {
+        "category": "неживе",
+        "object": "комп’ютер",
+        "hints": ["Це техніка.", "Він допомагає працювати та грати.", "Він має екран."]
+    },
+    {
+        "category": "неживе",
+        "object": "стіл",
+        "hints": ["Меблі для роботи.", "Його ставлять у кімнаті.", "На ньому можна писати."]
+    },
+    {
+        "category": "вигадане",
+        "object": "дракон",
+        "hints": ["Він дихає вогнем.", "Це міфічна істота.", "Він може літати."]
+    },
+    {
+        "category": "вигадане",
+        "object": "єдиноріг",
+        "hints": ["Це чарівна істота.", "Він має один ріг.", "Він символ чистоти."]
+    },
+]
+
+MAX_ATTEMPTS = 5
+
+def main():
+    secret = random.choice(riddles)
+    attempts = 0
+    print("Вітаємо у грі! Загаданий об'єкт може бути живим, неживим або вигаданим.")
+    print(f"Категорія загадки: {secret['category']}")
+
+    while attempts < MAX_ATTEMPTS:
+        guess = input(f"Спроба {attempts + 1}/{MAX_ATTEMPTS}. Введіть вашу відповідь: ").strip().lower()
+        if not guess:
+            print("Помилка: відповідь не може бути порожньою. Спробуйте ще раз.")
+            continue
+
+        attempts += 1
+
+        if guess == secret["object"]:
+            print(f"Вітаємо! Ви правильно вгадали — це {secret['object']}!")
+            break
+        else:
+            if attempts <= len(secret["hints"]):
+                print("Ні, але ось підказка:", secret["hints"][attempts - 1])
+            else:
+                print("Ні, підказок більше немає.")
+
+    else:
+        print(f"На жаль, спроби закінчились. Загаданий об'єкт був: {secret['object']}.")
+
+if __name__ == "__main__":
+    main()
