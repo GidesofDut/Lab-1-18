@@ -1,0 +1,45 @@
+contacts = [
+    {"first_name": "Влад", "last_name": "Петров", "city": "Київ", "phone": "+380123456789"},
+    {"first_name": "Настя", "last_name": "Сидоренко", "city": "Львів", "phone": "+380987654321"},
+    {"first_name": "Марія", "last_name": "Коваль", "city": "Київ", "phone": "+380555123456"},
+    {"first_name": "Андрей", "last_name": "Гончаренко", "city": "Одеса", "phone": "+380444555666"},
+]
+
+def search_contacts(query, field):
+
+    query_lower = query.strip().lower()
+    results = []
+    for contact in contacts:
+        if query_lower in contact[field].lower():
+            results.append(contact)
+    return results
+
+def main():
+    fields = {"1": "first_name", "2": "last_name", "3": "city"}
+
+    print("Розширений пошук контактів")
+    print("Виберіть поле для пошуку:")
+    print("1 - Ім'я")
+    print("2 - Прізвище")
+    print("3 - Місто")
+
+    choice = input("Ваш вибір: ").strip()
+    if choice not in fields:
+        print("Помилка: неправильний вибір поля пошуку.")
+        return
+
+    query = input(f"Введіть пошуковий запит для {fields[choice]}: ").strip()
+    if not query:
+        print("Помилка: порожній запит.")
+        return
+
+    results = search_contacts(query, fields[choice])
+    if results:
+        print(f"Знайдено {len(results)} контакт(ів):")
+        for c in results:
+            print(f"{c['first_name']} {c['last_name']}, {c['city']}, тел: {c['phone']}")
+    else:
+        print("Контактів, що відповідають запиту, не знайдено.")
+
+if __name__ == "__main__":
+    main()
