@@ -1,0 +1,33 @@
+from typing import Callable, Any, Union
+
+def process_data(data: Union[list, tuple, dict], operation: Callable[[Any], Any], dict_mode: str = 'values'):
+    
+    if isinstance(data, list):
+        return [operation(x) for x in data]
+
+    elif isinstance(data, tuple):
+        return tuple(operation(x) for x in data)
+
+    elif isinstance(data, dict):
+        if dict_mode == 'keys':
+            return {operation(k): v for k, v in data.items()}
+        elif dict_mode == 'values':
+            return {k: operation(v) for k, v in data.items()}
+        elif dict_mode == 'items':
+            return {operation(kv): None for kv in data.items()}  # приклад, повертаємо словник з обробленими кортежами, значення None
+        else:
+            raise ValueError("dict_mode має бути 'keys', 'values' або 'items'")
+
+    else:
+        raise TypeError("Підтримуються лише list, tuple і dict")
+
+lst = [1, 2, 3, 4]
+print(process_data(lst, lambda x: x * 10))  # [10, 20, 30, 40]
+
+tup = (5, 6, 7)
+print(process_data(tup, lambda x: x + 1))  # (6, 7, 8)
+
+d = {'a': 10, 'b': 20}
+print(process_data(d, lambda x: x * 2, dict_mode='values'))  # {'a': 20, 'b': 40}
+
+print(process_data(d, lambda x: x.upper(), dict_mode='keys'))  # {'A': 10, 'B': 20}
